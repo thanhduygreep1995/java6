@@ -56,7 +56,7 @@ app.controller("myCtrl1", function($scope, $http) {
 	}
 
 
-
+1
 	$scope.reset = function() {
 		$scope.form = {
 			image: "cloud-upload.jpg"
