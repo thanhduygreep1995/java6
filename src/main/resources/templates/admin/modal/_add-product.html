@@ -1,0 +1,62 @@
+<div th:fragment="add-product"  class="modal fade" id="add-pro" data-bs-backdrop="static"
+		aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+		tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered" >
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalToggleLabel">Thêm
+						sản phẩm</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3 text-center">
+						<label for="image">
+					<img ng-src="{{'/assets/images/product/'+form.image}}" style="max-width:100%;height:200px">
+				</label>
+					</div>
+						<div class="mb-3">
+							<label class="form-label">Ảnh sản phẩm:</label> 
+							<input
+								type="file" class="form-control" id="image" 
+								onchange="angular.element(this).scope().imageChanged(this.files)" >
+						</div>				
+									
+						<div class="mb-3">
+							<label class="form-label">Tên sản phẩm:</label> <input ng-model="form.name"
+								type="text" class="form-control" id="namepro" name="namepro"
+								required>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Danh mục:</label> 
+							<select ng-model="form.categoryName" class="form-control" 
+								id="category" name="category">
+									<option ng-repeat="c in categorys" ng-value="c.name">{{c.name}}</option>						
+							</select>
+						</div>
+						
+						<div class="mb-3">
+							<label class="form-label">Giá sản phẩm:</label> <input ng-model="form.price"
+								type="number" class="form-control" id="proprice" name="proprice"
+								required>
+						</div>
+						<div class="mb-3">
+							<label class="form-label">Số lượng hàng:</label> <input ng-model="form.quantity"
+								type="number" class="form-control" id="quantitypro"
+								name="quantitypro" required>
+						</div>
+						<div id="error-message" class="text-danger"></div>
+
+					<!--</form>-->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" ng-disabled="form.id" 
+						ng-click="create()">Thêm</button>
+					<button type="button" class="btn btn-primary" ng-disabled="form.id"
+						ng-click="update()">Làm mới</button>
+						<button type="button" class="btn btn-primary" ng-disabled="!form.id"
+						ng-click="update()">Cập nhật</button>
+				</div>
+			</div>
+		</div>
+	</div>

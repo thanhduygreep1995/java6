@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{/admin/_admin :: dynamic(~{::main})}">
+<head>
+</head>
+<body>
+	<!-- CONTENT -->
+	<main>
+
+        <div class="head-title">
+			<div class="left">
+				<h1>Quản lý tài khoản</h1>
+			</div>
+		</div>
+
+        <div class="container-fluid">
+            <div class="row g-3">       
+                <div class="col-auto">
+                    <label class="col-form-label" for="sel1"><strong>Tìm kiếm:</strong> </label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" ng-model="search.name" style="min-width: 100px;" class="form-control" id="timKiem" placeholder="Nhập từ khóa...">
+                </div>
+                <div class="col-auto">
+                    <label class="col-form-label" for="sel1"><strong>Tìm theo danh mục:</strong> </label>
+                </div>
+				<div class="col-auto">
+
+						<select ng-model="search.categoryName"  type="submit" name="categoryId"
+							class="form-control fill mr-3" style="min-width: 180px;">
+							<option value=" " selected>Tất cả</option>
+								<option ng-repeat="sp in categorys" ng-value="sp.name" >
+									{{sp.name}}</option>
+						</select>
+				</div>
+				
+
+				<div class="col-auto ">
+					<button type="button" class="btn btn-success"
+						data-bs-toggle="modal" data-bs-target="#add-pro" ng-click="reset()">Thêm sản
+						phẩm</button>
+				</div>
+			
+                
+                
+            </div>
+
+            <hr>
+            <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Ảnh</th>
+                            <th scope="col">Tên sản phẩm</th>
+                            <th scope="col">Giá (VNĐ)</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Danh mục</th>
+                            <th scope="col">Thao tác</th>                                   
+                        </tr>
+                    </thead>
+                    <tbody id="table">
+                        
+                            <tr ng-repeat="sp in prodwcate | filter:search">
+                                <td><img class="img-fluid" width="80px" height="80px" th:src="@{/assets/images/product/{{sp.image}}}" alt=""></td>
+                                <td>{{sp.name}}</td>
+                                <td>{{sp.price | number}} VNĐ</td>
+                                <td>{{sp.quantity}}</td>
+                                <td>{{sp.categoryName}}</td>
+                                <td>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#add-pro" ng-click="edit(sp.id)" class="btn btn-outline-primary">Sửa</button>
+                                    <button type="button" ng-click="delete(sp.id)" class="btn btn-outline-danger">Xóa</button>
+                                </td>
+                            </tr>
+                    </tbody>
+            </table>
+        </div>
+    </main>
+	<!-- CONTENT -->
+
+</body>
+</html>
