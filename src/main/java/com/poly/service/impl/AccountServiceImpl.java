@@ -24,5 +24,11 @@ public class AccountServiceImpl implements AccountService {
 		return accdao.findById(username).get();
 	}
 
+	@Override
+	public Account findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return accdao.findByUsername(username);
+	}
+
 	
 }

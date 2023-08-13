@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.dto.OrderDTO;
 import com.poly.entity.Order;
 import com.poly.service.OrderService;
@@ -22,14 +23,10 @@ import com.poly.service.OrderService;
 public class OrderRestController {
     @Autowired
     OrderService orderService;
-
-    @GetMapping("/list")
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
-    }
-    @PostMapping("/create")
-	public ResponseEntity<Order> createOrder(@RequestBody OrderDTO orderDTO) {
-	    Order savedOrder = orderService.save(orderDTO);
-	    return ResponseEntity.ok(savedOrder);
+	
+	
+	@PostMapping
+	public Order purchase(@RequestBody JsonNode orderData) {	   
+	    return orderService.create(orderData);			
 	}
 }

@@ -9,5 +9,5 @@ public interface AccountService {
 	
 	Account finById(String username);
 	
-
+	Account findByUsername(String username);
 }
