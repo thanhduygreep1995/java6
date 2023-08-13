@@ -24,7 +24,7 @@
 					</div>
 					
 						
-						<div th:if="${loginMessage}" class="alert alert-warning" role="alert" th:text=${loginMessage}>
+						<div th:if="${message}" class="alert alert-warning" role="alert" th:text=${message}>
 							</div>
 					
 					<form  th:action="@{/security/login}" method="post">

@@ -49,8 +49,18 @@
                 <div class="card-footer">
                     <div class="d-flex bd-highlight">
                    
-                       <button  type="button" class="me-auto p-2 bd-highlight btn me-2"> <<a href="#!">Tiếp tục mua sắm</a></button>
-                        <button type="button" class="btn btn-lg" style="color: #fff; background: linear-gradient(180deg,#f79429,#f7712e);">Thanh Toán</button>
+                        <a href="/"  type="button" class="me-auto p-2 bd-highlight btn btn-lg me-2" style="color: #fff; background: linear-gradient(180deg,#f79429,#f7712e);">Tiếp tục mua sắm</a>
+                        <div th:unless="${#request?.remoteUser}">
+                            <form th:action="@{/cart/pay}" method="post">
+                                <button type="submit" class="btn btn-lg" style="color: #fff; background: linear-gradient(180deg,#f79429,#f7712e);">Thanh Toán</button>
+                            </form>
+                        </div>
+                        
+                        <div th:if="${#request?.remoteUser}">
+                            <form th:action="@{/cart/checkout}" method="post">
+                                <button type="submit" class="btn btn-lg" style="color: #fff; background: linear-gradient(180deg,#f79429,#f7712e);">Thanh Toán</button>
+                            </form>
+                        </div>
 
                     </div>
                     

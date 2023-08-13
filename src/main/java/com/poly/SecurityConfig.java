@@ -1,5 +1,8 @@
 package com.poly;
 
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				String[] role = user.getAccountRoles().stream()				
 						.map(accountRole -> accountRole.getRole().getName())
 						.collect(Collectors.toList()).toArray(new String[0]);
+				Map<String, Object> authentication = new HashMap<>();
+                authentication.put("user", user);
+                byte[] token = (username + ":" + user.getPassword()).getBytes();
+                authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
+                session.set("authentication", authentication);
 				session.set("account", user);
 				return User.withUsername(username).password(password).roles(role).build();
 			} catch (Exception e) {
