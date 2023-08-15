@@ -33,13 +33,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers("/rest/**","/**", "/assets/**","/home/**").permitAll()	
+		.antMatchers("/rest/**", "/assets/**","/home/**").permitAll()	
 		.antMatchers(HttpMethod.POST, "/rest/products/put").permitAll(); // Tạm thời tắt bảo mật cho POST
-		http .csrf().disable() .authorizeRequests() .anyRequest().permitAll(); 
-		http.formLogin().loginPage("/home/login").loginProcessingUrl("/security/login")
-				.defaultSuccessUrl("/security/login/success", false).failureUrl("/security/login/error");
 		
-		http.logout().logoutUrl("/security/logout").logoutSuccessUrl("/security/logout/success");
+		http .csrf().disable(); 
+		
+		http.authorizeRequests()
+		.antMatchers("/admin/**").hasAnyRole("admin", "director")
+		.antMatchers("/rest/authorities").hasRole("director")
+		.anyRequest().permitAll(); 
+
+
+		
+		http.formLogin()
+			.loginPage("/home/login")
+			.loginProcessingUrl("/security/login")
+			.defaultSuccessUrl("/security/login/success", false)
+			.failureUrl("/security/login/error");
+		
+		http.logout()
+			.logoutUrl("/security/logout")
+			.logoutSuccessUrl("/security/logout/success");
 
 	}
 
@@ -52,11 +66,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				String[] role = user.getAccountRoles().stream()				
 						.map(accountRole -> accountRole.getRole().getName())
 						.collect(Collectors.toList()).toArray(new String[0]);
+				
 				Map<String, Object> authentication = new HashMap<>();
-                authentication.put("user", user);
-                byte[] token = (username + ":" + user.getPassword()).getBytes();
-                authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
-                session.set("authentication", authentication);
+				authentication.put("user", user);
+				byte[] token = (username + ":" + user.getPassword()).getBytes();
+				authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
+				session.set("authentication", authentication);
 				session.set("account", user);
 				return User.withUsername(username).password(password).roles(role).build();
 			} catch (Exception e) {
