@@ -34,7 +34,7 @@
 				</li>
 				<!-- Tìm kiếm end -->
 				<li class="nav-item d-sm-none d-xxl-block d-print-block">
-					<button class="btn badge text-wrap fw-normal m-2"
+					<a href="/order"><button class="btn badge text-wrap fw-normal m-2"
 						style="width: 6rem; height: 40px; background-color: rgba(255,172,10,.6); color:black; ">
 						Lịch sử đơn hàng
 					</button>
@@ -76,8 +76,8 @@
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" href="/home/profile">Thông tin</a></li>
 					
-						<li th:if="${#request?.isUserInRole('ROLE_ADMIN')}">
-							 <a class="dropdown-item" href="/admin/home">Quản lí</a>
+						<li th:if="${#request?.isUserInRole('ROLE_admin')}">
+							 <a class="dropdown-item" href="/admin">Quản lí</a>
 						</li>
 
 			
