@@ -131,7 +131,7 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 			});
 		}
 	};
-
+	
 	$scope.saveToLocalStorage = function() {
 		var json = JSON.stringify(angular.copy($scope.items));
 		localStorage.setItem("cart", json);
@@ -140,10 +140,6 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 	$scope.loadFormLocalStorage = function() {
 		var json = localStorage.getItem("cart");
 		this.items = json ? JSON.parse(json) : [];
-	};
-	$scope.clear = function() {
-		$scope.items = []
-		$scope.saveToLocalStorage();
 	};
 
 	$scope.removeCart = function(id) {
@@ -168,6 +164,16 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 			}
 		}*/
 	}
+	$scope.clear = function() {
+		$scope.items = []
+		$scope.saveToLocalStorage();
+	};
+
+	$scope.amount = function() {
+		return this.items
+			.map(item => item.quantity * item.price)
+			.reduce((total, quantity) => total += quantity, 0);
+	}
 
 	$scope.createOrderAndDetails = function() {
 		var status = ($scope.orderData.paymentMethod === 'Cash') ? 'false' : 'true';
@@ -186,7 +192,10 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 				};
 			})
 		};
-
+		if ($scope.items == null || $scope.items.length == 0) {
+			alert("Không có hàng để đặt!");
+			return;
+		}
 		$http.post("/rest/orders", orderData).then(resp => {
 			// Xử lý sau khi đặt hàng thành công, ví dụ như chuyển hướng đến trang thành công
 			alert("Đặt hàng thành công!");
@@ -216,11 +225,6 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 		}*/
 	}
 
-	$scope.amount = function() {
-		return this.items
-			.map(item => item.quantity * item.price)
-			.reduce((total, quantity) => total += quantity, 0);
-	}
 	$scope.count = function() {
 		return this.items.length;
 	}
