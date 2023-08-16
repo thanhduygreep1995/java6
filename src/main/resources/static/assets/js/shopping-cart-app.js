@@ -194,6 +194,7 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 		};
 		if ($scope.items == null || $scope.items.length == 0) {
 			alert("Không có hàng để đặt!");
+			window.location.href = '/';
 			return;
 		}
 		$http.post("/rest/orders", orderData).then(resp => {
@@ -201,6 +202,7 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 			alert("Đặt hàng thành công!");
 			// Đặt giỏ hàng thành rỗng sau khi đặt hàng thành công
 			$scope.clear();
+			window.location.href = '/';
 			// Điều hướng đến trang thành công hoặc trang xác nhận đơn hàng
 			// window.location.href = "/success";
 		}).catch(error => {
