@@ -11,4 +11,7 @@ public interface OrderService {
 	List<Order> getAllOrders();
 	Order save(OrderDTO orderDTO);
 	Order create(JsonNode orderData);
+	List<Order> findAll();
+	Order findById(Integer id);
+	public List<Order> findByUsername(String username);
 }
