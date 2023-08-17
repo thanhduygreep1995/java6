@@ -34,12 +34,12 @@
 						<td>
 							<span th:text="${#numbers.formatDecimal(item.product.price , 0, 'POINT', 0, 'POINT')} + 'đ'"></span>						
 						</td>
-						<td>[[${item.product.quantity}]]</td>
+						<td>[[${item.quantity}]]</td>
 						<td>
-							<span th:text="${#numbers.formatDecimal(item.product.price * item.product.quantity, 0, 'POINT', 0, 'POINT')} + 'đ'"></span>
+							<span th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'POINT', 0, 'POINT')} + 'đ'"></span>
 						</td>
 					</tr>
-				</tbody>
+				</tbody>		
 			</table>
 			</div>
 			<div class="card-footer text-end">
