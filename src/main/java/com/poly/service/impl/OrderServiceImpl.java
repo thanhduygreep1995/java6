@@ -83,5 +83,19 @@ public class OrderServiceImpl implements OrderService{
         orderDetailDao.saveAll(details);
         return order;
 	}
+	@Override
+	public List<Order> findAll() {
+		return ordDao.findAll();
+	}
+
+	@Override
+	public Order findById(Integer id) {
+		return ordDao.findById(id).get();
+	}
+
+	@Override
+	public List<Order> findByUsername(String username) {
+		return ordDao.findByUsername(username);
+	}
 	
 }
