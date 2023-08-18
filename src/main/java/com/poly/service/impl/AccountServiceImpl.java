@@ -1,5 +1,6 @@
 package com.poly.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,24 @@ public class AccountServiceImpl implements AccountService {
 	public Account findByUsername(String username) {
 		// TODO Auto-generated method stub
 		return accdao.findByUsername(username);
+	}
+
+	@Override
+	public List<Account> findAll() {
+		// TODO Auto-generated method stub
+		return accdao.findAll();
+	}
+
+	@Override
+	public Account update(Account account) {
+		// TODO Auto-generated method stub
+		return accdao.save(account);
+	}
+
+	@Override
+	public void delete(String username) {
+		// TODO Auto-generated method stub
+		 accdao.deleteById(username);
 	}
 
 	

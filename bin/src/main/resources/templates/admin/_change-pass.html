@@ -1,0 +1,43 @@
+<div th:fragment="add-product"  class="modal fade" id="add-pro" data-bs-backdrop="static"
+		aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+		tabindex="-1">
+		
+			
+   
+
+    <!-- Register Section Begin -->
+    <div class="register-login-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="login-form">
+                        <h2>Change Password</h2>
+                        <form action="change-password" method="post">
+                        <h5 class="text-danger">${message }</h5>
+                            <div class="group-input">
+                                <label for="username">Username *</label>
+                                <input type="text" id="username" name="username">
+                            </div>
+                            <div class="group-input">
+                                <label for="pass">Password *</label>
+                                <input type="password" id="password" name="password">
+                            </div>
+
+                            <div class="group-input">
+                                <label for="pass">New Password *</label>
+                                <input type="password" id="newpassword" name="newpassword">
+                            </div>
+
+                            <div class="group-input">
+                                <label for="pass">Confirm New Password *</label>
+                                <input type="password" id="confirmpassword" name="confirmpassword">
+                            </div>
+
+                            <button type="submit" class="site-btn login-btn">Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	</div>
