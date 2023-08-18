@@ -8,5 +8,6 @@ import com.poly.entity.Account;
 public interface AccountDao extends JpaRepository<Account, String> {
 
     Account findByUsername(String username);
-
+    Account getAccountByEmail(String email);
+    Account findAccountByEmail(String email);
 }

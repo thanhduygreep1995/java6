@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- <title th:replace="${title}"></title> -->
+
+</head>
+
+<body>
+	
+	<main class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header" style="display: block; ">
+					<h1 class="text-center fs-4 fw-blod ">Đăng
+						Ký</h1>
+					
+				</div>
+				<div class="modal-body">
+
+					<div
+						class="icon mb-4 d-flex align-items-center justify-content-center">
+						<img th:src="@{/assets/images/login/login.png}" class="bi me-2" width="70"
+							height="70">
+					</div>
+					
+						
+						<div th:if="${message}" class="alert alert-warning" role="alert" th:text=${message}>
+							</div>
+					
+					<form  th:action="@{/save}" method="post" th:object="${account}">
+					
+							<div class="form-floating">
+							<input type="text" th:value="${fullname}" name="fullname" class="form-control"
+								placeholder="Fullname"> <label for="fullname">Họ và tên
+							</label>
+							<h7 style="color: red;">[[${messga2}]]</h7>
+							
+						</div>
+						
+						<div class="form-floating my-2">
+							<input th:value="${email}" name="email" class="form-control"
+								placeholder="Email"> <label for="email">Email
+								</label>
+								<h7 style="color: red;" >[[${messga3}]]</h7>
+						</div>
+						
+						<div class="form-floating my-2">
+							<input th:value="${username}" name="username" class="form-control"
+								placeholder="Username"> <label for="username">Tên tài khoản
+								</label>
+								<h7 style="color: red;" >[[${messga2}]]</h7>
+						</div>
+						
+						<div class="form-floating my-2">
+							<input th:value="${password}" type="password" name="password"
+								class="form-control" placeholder="Password" id="exampleInputPassword1"> 
+								<label
+								for="password">Mật khẩu</label>
+								<h7 style="color: red;" >[[${messga1}]]</h7>
+						</div>
+						<div class="form-floating my-2">
+							 <input type="password" class="form-control" placeholder="Password"
+                                            id="exampleInputPassword1" name="confirmPassword" >
+                                            <label for="exampleInputPassword1">Nhập
+                                            lại mật khẩu</label>
+								<h7 style="color: red;" >[[${errorMessage}]]</h7>
+						</div>
+						<label for="productImage">Image File</label>
+						<div class="form-floating my-2">
+						
+                  <input  type="file"  class="form-control-file" name="photo"
+                    placeholder="Product Image" aria-describedby="productImage">
+                    </div>
+						<button class="w-100 btn btn-lg btn-primary" type="submit">Đăng ký</button>
+					</form>
+					
+					<div
+						class="d-flex align-items-center justify-content-center mt-2 pb-4">
+						<p class="mb-0 me-2">Bạn đã có tài khoản?</p>
+						<a style="color: blue;" class="nav-link" th:href="@{/home/login}">Đăng
+							nhập ngay</a>
+					</div>
+
+				</div>
+			</div>
+		</main>
+	
+</body>
+
+</html>
