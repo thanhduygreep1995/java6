@@ -13,7 +13,9 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 			$http.defaults.headers.common["Authorization"] = $auth.token;
 		}
 	});
+	
 
+	
 	$http.get('/rest/products/list').then(function(response) {
 		// Gán danh sách sản phẩm từ phản hồi API vào $scope.products
 		$scope.products = response.data;
@@ -24,7 +26,9 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 	$http.get('/rest/products/prodwithcate').then(function(response) {
 		$scope.prodwcate = response.data;
 	});
-
+	$http.get('/rest/orders/list').then(function(response) {
+		$scope.orders = response.data;
+	});
 
 	$scope.initialize = function() {
 		$http.get('/rest/products/prodwithcate').then(function(response) {
@@ -231,7 +235,39 @@ app.controller("myCtrl1", function($scope,$rootScope, $http) {
 		return this.items.length;
 	}
 
-
+	$scope.editorder = function(key) {
+		var url = `/rest/orders/${key}`;
+		$http.get(url).then(function(response) {
+			$scope.form = response.data;
+			$scope.key = key;
+		})
+	}
+	
+	$scope.updateorder = function(){
+		var item = angular.copy($scope.form);
+		$http.put(`/rest/orders/${item.id}`, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.id == item.id);
+			$scope.items[index] = item;
+			alert("Cập nhật thành công!");
+		})
+	.then(function() {
+			$('#edit-order').modal('hide');
+			$scope.initialize1();
+		}).catch(error => {
+			alert("Lỗi cập nhật sản phẩm!");
+			console.log("Error", error);
+		});
+	}
+	
+	$scope.initialize1 = function() {
+		$http.get('/rest/orders/list').then(function(response) {
+			$scope.orders = response.data;
+		})
+			$http.get('/rest/account/list').then(function(response) {
+		$scope.accounts = response.data;
+		});
+	}
+	$scope.initialize();
 
 	// Khởi tạo giỏ hàng từ Local Storage khi trang tải
 	$scope.items = JSON.parse(localStorage.getItem("cart")) || [];

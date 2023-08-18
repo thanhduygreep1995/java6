@@ -13,7 +13,9 @@ import com.poly.dao.OrderDao;
 import com.poly.dao.OrderDetailDao;
 import com.poly.dao.ProductDAO;
 import com.poly.dto.OrderDTO;
+import com.poly.dto.ProductDTO;
 import com.poly.entity.Account;
+import com.poly.entity.Category;
 import com.poly.entity.Order;
 import com.poly.entity.OrderDetail;
 import com.poly.entity.Product;
@@ -32,6 +34,8 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	OrderDetailDao orderDetailDao;
 	
+	
+	
 	@Override
 	public Double getTotal() {
 		return ordDao.getTotal();
@@ -44,16 +48,17 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public Order save(OrderDTO orderDTO) {
+	public Order save(Order order) {
 		// TODO Auto-generated method stub
-		Order order = new Order();
-		order.setAccount(orderDTO.getAccount());
-		order.setCreateDate(orderDTO.getCreateDate());
-		order.setOrderDetail(orderDTO.getOrderDetail());
-		order.setId(orderDTO.getId());
-		order.setStatus(orderDTO.getStatus());
-		order.setTotal(orderDTO.getTotal());
-		return ordDao.save(order);
+		Order order1 = new Order();
+		order1.setAccount(order1.getAccount());
+		order1.setCreateDate(order1.getCreateDate());
+		order1.setOrderDetail(order1.getOrderDetail());
+		order1.setAddress(order1.getAddress());		
+		order1.setId(order1.getId());
+		order1.setStatus(order1.getStatus());
+		order1.setTotal(order1.getTotal());
+		return ordDao.save(order1);
 	}
 
 	@Override
@@ -83,19 +88,41 @@ public class OrderServiceImpl implements OrderService{
         orderDetailDao.saveAll(details);
         return order;
 	}
-	@Override
-	public List<Order> findAll() {
-		return ordDao.findAll();
-	}
+//<<<<<<< Updated upstream
+//	@Override
+//	public List<Order> findAll() {
+//		return ordDao.findAll();
+//	}
+
+//	@Override
+//	public Order findById(Integer id) {
+//=======
 
 	@Override
 	public Order findById(Integer id) {
+		// TODO Auto-generated method stub
+//>>>>>>> Stashed changes
 		return ordDao.findById(id).get();
 	}
 
 	@Override
-	public List<Order> findByUsername(String username) {
-		return ordDao.findByUsername(username);
+//<<<<<<< Updated upstream
+//	public List<Order> findByUsername(String username) {
+//		return ordDao.findByUsername(username);
+//	}
+//=======
+	public List<Order> findAll() {
+		// TODO Auto-generated method stub	
+		return ordDao.findAll();
 	}
+
+	@Override
+	public List<Order> findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+//>>>>>>> Stashed changes
 	
 }

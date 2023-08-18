@@ -9,9 +9,13 @@ import com.poly.entity.Order;
 public interface OrderService {
 	Double getTotal();
 	List<Order> getAllOrders();
-	Order save(OrderDTO orderDTO);
+	Order save(Order order);
+	Order findById(Integer id);
 	Order create(JsonNode orderData);
 	List<Order> findAll();
-	Order findById(Integer id);
+//<<<<<<< Updated upstream
+//	Order findById(Integer id);
 	public List<Order> findByUsername(String username);
+//=======
+//>>>>>>> Stashed changes
 }
