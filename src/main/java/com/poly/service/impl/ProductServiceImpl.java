@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> productList = findAll();
 		List<Category> categoryList = cateService.findAllCategory();
 
-		for (Product product : productList) {
+		productList.forEach(product -> {
 			ProductDTO productDTO = new ProductDTO();
 			productDTO.setId(product.getId());
 			productDTO.setName(product.getName());
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 			}
 
 			productDTOList.add(productDTO);
-		}
+		});
 
 		return productDTOList;
 	}

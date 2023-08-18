@@ -1,7 +1,18 @@
 var indexCart = 0;
 
 var app = angular.module("myapp", []);
-app.controller("myCtrl1", function($scope, $http) {
+app.filter('dotDecimal', function() {
+	return function(input) {
+		return input.toString().replace(/,/g, '.');
+	};
+});
+app.controller("myCtrl1", function($scope,$rootScope, $http) {
+	$http.get(`/rest/account-role/security`).then(resp => {
+		if (resp.data) {
+			$auth = $rootScope.$auth = resp.data;
+			$http.defaults.headers.common["Authorization"] = $auth.token;
+		}
+	});
 
 	$http.get('/rest/products/list').then(function(response) {
 		// Gán danh sách sản phẩm từ phản hồi API vào $scope.products
@@ -56,7 +67,7 @@ app.controller("myCtrl1", function($scope, $http) {
 	}
 
 
-1
+
 	$scope.reset = function() {
 		$scope.form = {
 			image: "cloud-upload.jpg"
@@ -120,7 +131,7 @@ app.controller("myCtrl1", function($scope, $http) {
 			});
 		}
 	};
-
+	
 	$scope.saveToLocalStorage = function() {
 		var json = JSON.stringify(angular.copy($scope.items));
 		localStorage.setItem("cart", json);
@@ -130,7 +141,6 @@ app.controller("myCtrl1", function($scope, $http) {
 		var json = localStorage.getItem("cart");
 		this.items = json ? JSON.parse(json) : [];
 	};
-
 
 	$scope.removeCart = function(id) {
 		var index = $scope.items.findIndex(item => item.id === id);
@@ -154,7 +164,52 @@ app.controller("myCtrl1", function($scope, $http) {
 			}
 		}*/
 	}
+	$scope.clear = function() {
+		$scope.items = []
+		$scope.saveToLocalStorage();
+	};
 
+	$scope.amount = function() {
+		return this.items
+			.map(item => item.quantity * item.price)
+			.reduce((total, quantity) => total += quantity, 0);
+	}
+
+	$scope.createOrderAndDetails = function() {
+		var status = ($scope.orderData.paymentMethod === 'Cash') ? 'false' : 'true';
+
+		var orderData = {
+			account: $auth.user.username,
+			createDate: new Date(),
+			total: $scope.amount(),
+			status: status,
+			address: $scope.orderData.address,
+			orderDetail: $scope.items.map(item => {
+				return {
+					product: item.id,
+					price: item.price,
+					quantity: item.quantity
+				};
+			})
+		};
+		if ($scope.items == null || $scope.items.length == 0) {
+			alert("Không có hàng để đặt!");
+			window.location.href = '/';
+			return;
+		}
+		$http.post("/rest/orders", orderData).then(resp => {
+			// Xử lý sau khi đặt hàng thành công, ví dụ như chuyển hướng đến trang thành công
+			alert("Đặt hàng thành công!");
+			// Đặt giỏ hàng thành rỗng sau khi đặt hàng thành công
+			$scope.clear();
+			window.location.href = '/';
+			// Điều hướng đến trang thành công hoặc trang xác nhận đơn hàng
+			// window.location.href = "/success";
+		}).catch(error => {
+			alert("Đặt hàng lỗi!");
+			console.log(error);
+		});
+	};
 
 
 	$scope.subClick = function(id) {
@@ -172,11 +227,6 @@ app.controller("myCtrl1", function($scope, $http) {
 		}*/
 	}
 
-	$scope.amount = function() {
-		return this.items
-			.map(item => item.quantity * item.price)
-			.reduce((total, quantity) => total += quantity, 0);
-	}
 	$scope.count = function() {
 		return this.items.length;
 	}
