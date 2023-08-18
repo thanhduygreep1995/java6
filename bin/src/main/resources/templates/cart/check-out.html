@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<head>
+	<meta charset="UTF-8">
+	<!-- <title th:replace="${title}"></title> -->
+</head>
+
+<body>
+
+	<main class="container w-100 mx-auto my-2" style="max-width: 1200px;">
+		<div style="box-shadow: 0 0 18px rgb(0 0 0 / 12%)">
+			<div class="card">
+				<div class="card-header text-center fw-bolder fs-3">
+					<p class="mb-0">THÔNG TIN ĐẶT HÀNG</p>
+				</div>
+
+
+				<div class="card-body">
+					<form>
+						<p class="fs-6 fw-bold">THÔNG TIN KHÁCH HÀNG:</p>
+						<div class="row fw-bold">
+							<div class="col mb-3">
+								<label class="form-label ">Họ và tên</label>
+								<input name="fullname" type="text" class="form-control" 
+								value="{{$auth.user.fullname}}"
+									readonly />
+							</div>
+							<div class="col mb-3">
+								<label for="exampleInputEmail1" class="form-label">Email</label>
+								<input name="email" type="text" class="form-control" value="{{$auth.user.email}}" />
+							</div>
+						</div>
+						<div class="col mb-3">
+							<label class="form-label">Địa chỉ:</label>
+							<input name="address" type="text" class="form-control" ng-model="orderData.address" />
+						</div>
+
+						<div class="col mb-3">
+							<label for="paymentMethod" class="form-label">Phương thức thanh toán:</label>
+							<select id="paymentMethod" name="paymentMethod" ng-model="orderData.paymentMethod"
+								class="form-select">
+								<option value="Cash">Tiền mặt</option>
+								<option value="Momo">Momo</option>
+							</select>
+							<!--<select  id="paymentMethod" name="paymentMethod" th:field="*{paymentMethod}" class="form-select">
+                    <option th:each="paymentMethod : ${T(com.poly.enumeration.PaymentMethod).values()}"
+                            th:value="${paymentMethod}"
+                            th:text="${paymentMethod == T(com.poly.enumeration.PaymentMethod).Cash ? 'Tiền mặt' : 'Momo'}"></option>
+                </select>-->
+						</div>
+
+					</form>
+					<hr>
+					<h3>TỔNG TIỀN HÓA ĐƠN: {{ amount()| number | dotDecimal }} VNĐ </h3>
+					<hr>
+					<table class="table">
+						<tr>
+							<th></th>
+							<th>Tên sản phẩm</th>
+							<th>Giá</th>
+							<th>Số lượng</th>
+
+						</tr>
+						<tr ng-repeat="c in items" style="font-size: large;">
+							<td class="d-flex justify-content-center"><img height="100px" width="100px"
+									th:src="@{/assets/images/product/{{c.image}}}" alt=""></td>
+							<td>{{c.name}}</td>
+							<td>{{c.price | number | dotDecimal}} VNĐ</td>
+							<td><button ng-click="subClick(c.id)" class="btn btn-primary "
+									style="font-weight: bold;">-</button> {{c.quantity}} <button
+									class="btn btn-primary " style="font-weight: bold;"
+									ng-click="addClick(c.id)">+</button></td>
+
+
+
+
+						</tr>
+
+					</table>
+
+
+				</div>
+				<div class="card-footer">
+					<div class=" bd-highlight d-grid gap-2 col-6 mx-auto">
+
+
+						<button class="btn btn-lg" ng-click="createOrderAndDetails()"
+							style="color: #fff; background: linear-gradient(180deg, #f79429, #f7712e);">Thanh
+							Toán</button>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</main>
+
+</body>
+
+</html>

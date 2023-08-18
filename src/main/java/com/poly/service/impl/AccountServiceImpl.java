@@ -1,5 +1,6 @@
 package com.poly.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.poly.dao.AccountDao;
 import com.poly.entity.Account;
+import com.poly.entity.Order;
 import com.poly.service.AccountService;
 
 @Service
@@ -28,6 +30,12 @@ public class AccountServiceImpl implements AccountService {
 	public Account findByUsername(String username) {
 		// TODO Auto-generated method stub
 		return accdao.findByUsername(username);
+	}
+	
+	@Override
+	public List<Account> findAll() {
+		// TODO Auto-generated method stub	
+		return accdao.findAll();
 	}
 
 	

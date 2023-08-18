@@ -17,4 +17,6 @@ public class AccountRoleRestController {
     public Object getAuth(HttpSession session) {
         return session.getAttribute("authentication");
     }
+    
+    
 }

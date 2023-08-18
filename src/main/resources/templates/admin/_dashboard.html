@@ -1,0 +1,77 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/_admin :: dynamic(~{::main})}">
+
+<main>
+	<div class="head-title">
+		<div class="left">
+			<h1>Thống kê</h1>
+		</div>
+	</div>
+
+	<ul class="box-info">
+		<li><i class='bx bxs-calendar-check'></i> <span class="text">
+				<h3>[[${order}]]</h3>
+				<p>Đơn hàng</p>
+			</span></li>
+		<li><i class='bx bxs-group'></i> <span class="text">
+				<h3>[[${acc}]]</h3>
+				<p>Tài khoản</p>
+			</span></li>
+		<li><i class='bx bxs-dollar-circle'></i> <span class="text">
+				<h3 ><span th:text="${#numbers.formatDecimal(total, 0, 'POINT', 0, 'POINT')} + ' VNĐ'"></span></h3>
+				<p>Doanh thu</p>
+			</span></li>
+	</ul>
+
+
+	<div class="table-data">
+		<div class="order">
+			<div class="head">
+				<h3>Thông tin đơn hàng</h3>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>STT</th>
+						<th>Tài khoản</th>
+						<th>Địa chỉ</th>
+						<th>Tổng hóa đơn</th>
+						<th>Ngày đặt hàng</th>
+						<th>Trạng thái</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="order in orders">
+						<td>
+							{{order.id}}
+						</td>
+						<td >
+							{{order.account.username}}	
+						</td>
+						<td >
+							{{order.address}}	
+						</td>
+						<td >
+							{{order.total}}	
+						</td>
+						<td>
+							{{order.createDate}}
+						</td>
+						<td>
+						<span class="status process" ng-show="order.status === false">Đang xử lí</span>
+						<span class="status completed" ng-show="order.status === true">Thành công</span>
+						</td>
+						<td>
+							<button type="button" data-bs-toggle="modal" data-bs-target="#edit-order" ng-click="editorder(order.id)" class="btn btn-outline-primary">Sửa</button>
+						</td>
+					</tr>
+
+
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</main>
+
+</html>
